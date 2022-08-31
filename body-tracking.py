@@ -14,8 +14,8 @@ def drawLines (img, points):
 # First cammera
 cap = cv2.VideoCapture(1)
 
-mpHands = mp.solutions.hands
-hands = mpHands.Hands()
+mpHands = mp.solutions.pose
+hands = mpHands.Pose()
 mpDraw = mp.solutions.drawing_utils
 
 # Calculate FPS
@@ -35,28 +35,10 @@ while True:
     # Flip image 
     img = cv2.flip(imgRaw, 1)
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-    results = hands.process(imgRGB)    
-
-    # Hand recogniziton 
-    if results.multi_hand_landmarks:
-        for handLms in results.multi_hand_landmarks:
-            for id, lm in enumerate(handLms.landmark):
-                h,w,c=img.shape
-                cx,cy=int(lm.x * w), int(lm.y * h)
-
-
-                if id == INDEX_FINGER:
-                    if cx_prev != -1:
-                        points.append((cx, cy))
-                        if len(points) > MAX_LEN:
-                            del points[0]                        
-                    
-                    cv2.circle(img, (cx, cy), 6, (255, 0, 255), cv2.FILLED)
-                    cx_prev = cx
-                    cy_prev = cy
+    results = hands.process(imgRGB)        
             
     # Draw lines
-    drawLines(img, points)
+    mpDraw.draw_landmarks(img, results.pose_landmarks, mpHands.POSE_CONNECTIONS)
     
     # Draw FPS
     cTime = time.time()
