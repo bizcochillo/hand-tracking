@@ -12,7 +12,7 @@ def drawLines (img, points):
 
 
 # First cammera
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 mpHands = mp.solutions.hands
 hands = mpHands.Hands()
@@ -34,6 +34,7 @@ while True:
     success, imgRaw=cap.read()
     # Flip image 
     img = cv2.flip(imgRaw, 1)
+    img = cv2.resize(img, None, fx=2, fy=2, interpolation=cv2.INTER_AREA)  # Resize for bigger image
     imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     results = hands.process(imgRGB)    
 

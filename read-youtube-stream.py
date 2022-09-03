@@ -17,6 +17,7 @@ mpDraw = mp.solutions.drawing_utils
 
 while True:
     check, frame = capture.read()
+    frame = cv2.resize(frame, None, fx=1, fy=1, interpolation=cv2.INTER_AREA)
     imgRGB = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
     results = pose.process(imgRGB)
             
