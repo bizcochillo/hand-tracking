@@ -12,7 +12,7 @@ def drawLines (img, points):
 
 
 # First cammera
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 mpHands = mp.solutions.hands
 hands = mpHands.Hands()
@@ -68,4 +68,6 @@ while True:
 
     # Refresh image
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    c=cv2.waitKey(1)
+    if c==27 or c == 1048603: #Break if user enters 'Esc'.
+        break
