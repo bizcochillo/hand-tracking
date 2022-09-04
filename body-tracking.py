@@ -34,4 +34,6 @@ while True:
 
     # Refresh image
     cv2.imshow("Image", img)
-    cv2.waitKey(1)
+    c=cv2.WaitKey(1)
+    if c==27 or c == 1048603: #Break if user enters 'Esc'.
+        break
